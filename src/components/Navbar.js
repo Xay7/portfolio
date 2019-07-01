@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Home, At, Code } from 'styled-icons/fa-solid/';
+import { Link, withRouter } from 'react-router-dom';
 
 // Containers
 const Nav = styled.nav`
@@ -13,6 +14,12 @@ const Nav = styled.nav`
     background: white;
     box-shadow: 0 0px 5px 0px rgba(0,0,0,0.1);
     border-top: 1px solid rgba(0,0,0,0.1);
+
+    @media (min-width: 768px) {
+        height:100vh;
+        width:200px;
+        flex-direction:column;
+    }
 `;
 
 const NavItemContainer = styled.div`
@@ -28,6 +35,10 @@ const NavItemContainer = styled.div`
         margin: 0;
         color:${props => props.clicked ? "green" : "#AAA"};
         font-size:12px;
+        flex-direction: column;
+    }
+    @media (min-width: 768px) {
+        flex-direction: row;
     }
 `;
 
@@ -51,9 +62,20 @@ const ContactIcon = styled(At)`
     transition: all 150ms ease-in-out;
 `;
 
-// Text
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    width: 100%; 
+    height: 100%;
+    &:focus, &:hover, &:visited, &:StyledLink, &:active {
+        text-decoration: none;
+    }
+    @media (min-width: 768px) {
+        height: auto;
+    }
+`;
 
-const Navbar = () => {
+
+const Navbar = (props) => {
 
     const [clicked, setClicked] = useState({
         home: false,
@@ -71,25 +93,31 @@ const Navbar = () => {
                 return clicks[el] = false;
             }
         })
-        setClicked({ ...clicks });
+        setClicked({ ...clicks, });
     }
 
     return (
         <Nav>
-            <NavItemContainer onClick={() => handleClick('home')} clicked={clicked.home}>
-                <HomeIcon clicked={clicked.home} />
-                <p>Home</p>
-            </NavItemContainer>
-            <NavItemContainer onClick={() => handleClick('projects')} clicked={clicked.projects}>
-                <ProjectsIcon clicked={clicked.projects} />
-                <p>Projects</p>
-            </NavItemContainer>
-            <NavItemContainer onClick={() => handleClick('contact')} clicked={clicked.contact}>
-                <ContactIcon clicked={clicked.contact} />
-                <p>Contact</p>
-            </NavItemContainer>
+            <StyledLink to='/about'>
+                <NavItemContainer onClick={() => handleClick('home')} clicked={clicked.home}>
+                    <HomeIcon clicked={clicked.home} />
+                    <p>About</p>
+                </NavItemContainer>
+            </StyledLink>
+            <StyledLink to='/projects'>
+                <NavItemContainer onClick={() => handleClick('projects')} clicked={clicked.projects}>
+                    <ProjectsIcon clicked={clicked.projects} />
+                    <p>Projects</p>
+                </NavItemContainer>
+            </StyledLink>
+            <StyledLink to='/contact'>
+                <NavItemContainer onClick={() => handleClick('contact')} clicked={clicked.contact}>
+                    <ContactIcon clicked={clicked.contact} />
+                    <p>Contact</p>
+                </NavItemContainer>
+            </StyledLink>
         </Nav >
     )
 }
 
-export default Navbar;
+export default withRouter(Navbar);
