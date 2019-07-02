@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
-import Card from "./UI/Card";
+import Card from "./Card";
 import WeatherBackground from "../assets/weatherbg.png";
 import JustChattingBackground from "../assets/justchattingbg.png";
 import TeamfightTacticsBackground from "../assets/tftbg.webp";
@@ -15,30 +15,43 @@ const Container = styled.div`
     align-items:center;
     justify-content: center;
     margin-bottom:55px;
+
+    @media (min-width: 768px) {
+        margin-bottom:0px;
+        margin-top:55px;
+    }
 `;
 
-const Projects = () => {
+const Projects = (props) => {
+
+    let ref = useRef(null);
+
+    useEffect(() => {
+        props.getRef(ref, "projects");
+    }, [props])
+
     return (
-        <Container>
+        <Container ref={ref} >
             <Card
                 img={JustChattingBackground}
                 title="Just chatting"
                 description="MERN live chat application with custom rooms and channels. "
                 list={["Offline and online members", "Edit channel name, description", "Delete or leave room", "Edit avatar and password", "Messages timestamps", "Image and link support", "...and more!"]}
-                technologies={["React", "Javascript", "HTML5", "CSS3", "Nodejs", "Mongodb"]}
+                technologies={["React", "Redux", "Javascript", "HTML5", "CSS3", "Nodejs", "Mongodb"]}
                 link="https://justchatting.netlify.com/" />
             <Card
                 img={TeamfightTacticsBackground}
                 title="TFT Guide"
-                description="Game guide for Teamfight tactics game made by Riot games."
+                description="Teamfight tactics game guide"
                 list={["Get latest news from official source", "Filter champions and view their stats", "View item combinations and their stats", "Find champion synergies and their abilites"]}
-                technologies={["React", "Javascript", "HTML5", "CSS3"]}
+                technologies={["ReactNative", "Javascript", "HTML5", "CSS3"]}
                 link="https://play.google.com/store/apps/details?id=com.teamfighttactics"
                 mobile={true} />
             <Card
                 img={WeatherBackground}
                 title="Weather forecast"
-                description="5 day weather forecast with current temperatures, wind speed and humidity. You can view upcoming data in graphs up to 24 hours."
+                description="5 day weather forecast with dynamic graphs."
+                list={["Min/Max temp for each day", "Temp/Wind/Humidity graphs", "24 hour data display from the current hour"]}
                 technologies={["React", "Javascript", "HTML5", "CSS3"]}
                 link="https://weather-forecast-fe821.firebaseapp.com/" />
         </Container>
