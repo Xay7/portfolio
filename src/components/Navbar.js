@@ -57,17 +57,9 @@ const ContactIcon = styled(At)`
 
 class Navbar extends React.Component {
 
+    // Home -> Projects -> Contacts
     state = {
-        clicked: {
-            about: true,
-            projects: false,
-            contact: false
-        },
-        active: {
-            about: true,
-            projects: false,
-            contact: false
-        }
+        active: [true, false, false]
     }
 
     handleClick = (item, scrolling) => {
@@ -75,24 +67,38 @@ class Navbar extends React.Component {
         if (item === "about") {
             window.scrollTo(0, this.props.refs[0].current.offsetTop)
         }
-        if (item === "projects") {
+        else if (item === "projects") {
             window.scrollTo(0, this.props.refs[1].current.offsetTop - 55)
         }
-        if (item === "contact") {
+        else if (item === "contact") {
             window.scrollTo(0, this.props.refs[2].current.offsetTop - 55)
         }
     }
 
     handleScroll = () => {
-        if (window.scrollY >= this.props.refs[0].current.offsetTop && window.scrollY < this.props.refs[1].current.offsetTop - 100 && !this.state.active.about) {
-            return this.setState({ active: { about: true, projects: false, contact: false }, clicked: { about: true, projects: false, contact: false } })
-        }
-        else if (window.scrollY >= this.props.refs[1].current.offsetTop - 100 && window.scrollY < this.props.refs[2].current.offsetTop - 100 && !this.state.active.projects) {
-            return this.setState({ active: { about: false, projects: true, contact: false }, clicked: { about: false, projects: true, contact: false } })
-        }
-        else if (window.scrollY >= this.props.refs[2].current.offsetTop - 100 && !this.state.active.contact) {
-            return this.setState({ active: { about: false, projects: false, contact: true }, clicked: { about: false, projects: false, contact: true } })
-        }
+
+        let active = this.state.active;
+
+        this.props.refs.map((el, index, arr) => {
+            if (arr.length - 1 === index) {
+                if (window.scrollY >= el.current.offsetTop - 100 && !this.state.active[index]) {
+                    active = active.map((el, ind) => {
+                        if (ind === index) {
+                            return el = true;
+                        } else return el = false;
+                    })
+                    return this.setState({ active });
+                }
+            }
+            else if (window.scrollY >= el.current.offsetTop - 55 && window.scrollY < arr[index + 1].current.offsetTop - 55 && !this.state.active[index]) {
+                active = active.map((el, ind) => {
+                    if (ind === index) {
+                        return el = true;
+                    } else return el = false;
+                })
+                return this.setState({ active });
+            }
+        })
 
     }
 
@@ -107,16 +113,16 @@ class Navbar extends React.Component {
     render() {
         return (
             <Nav>
-                <NavItemContainer onClick={() => this.handleClick('about')} clicked={this.state.clicked.about}>
-                    <HomeIcon clicked={this.state.clicked.about} />
+                <NavItemContainer onClick={() => this.handleClick('about')} clicked={this.state.active[0]}>
+                    <HomeIcon clicked={this.state.active[0]} />
                     <p>About</p>
                 </NavItemContainer>
-                <NavItemContainer onClick={() => this.handleClick('projects')} clicked={this.state.clicked.projects}>
-                    <ProjectsIcon clicked={this.state.clicked.projects} />
+                <NavItemContainer onClick={() => this.handleClick('projects')} clicked={this.state.active[1]}>
+                    <ProjectsIcon clicked={this.state.active[1]} />
                     <p>Projects</p>
                 </NavItemContainer>
-                <NavItemContainer onClick={() => this.handleClick('contact')} clicked={this.state.clicked.contact}>
-                    <ContactIcon clicked={this.state.clicked.contact} />
+                <NavItemContainer onClick={() => this.handleClick('contact')} clicked={this.state.active[2]}>
+                    <ContactIcon clicked={this.state.active[2]} />
                     <p>Contact</p>
                 </NavItemContainer>
             </Nav >
