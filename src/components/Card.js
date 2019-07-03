@@ -34,12 +34,13 @@ const IsMobileContainer = styled.div`
 `;
 
 const Technologies = styled.div`
-    width: 100%;
+    width: auto;
     height: auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
+    margin: 0 10px;
 `;
 
 const Image = styled.img`
@@ -119,48 +120,48 @@ const Card = (props) => {
                     : <Title>{props.title}</Title>}
                 <Description>{props.description}</Description>
                 {props.list && <List>{props.list.map(el => {
-                    return <ListItem>{el}</ListItem>
+                    return <ListItem key={el}>{el}</ListItem>
                 })}</List>}
                 <Technologies>
                     {props.technologies.map(el => {
                         switch (el) {
                             case "React":
-                                return <LogoContainer>
+                                return <LogoContainer key={el}>
                                     <Logo src={ReactLogo} alt="React" />
                                     <Tooltip>React</Tooltip>
                                 </LogoContainer>
                             case "ReactNative":
-                                return <LogoContainer>
+                                return <LogoContainer key={el}>
                                     <Logo src={ReactLogo} alt="React Native" />
                                     <Tooltip>React Native</Tooltip>
                                 </LogoContainer>
                             case "Redux":
-                                return <LogoContainer>
+                                return <LogoContainer key={el}>
                                     <Logo src={ReduxLogo} alt="Redux" />
                                     <Tooltip>Redux</Tooltip>
                                 </LogoContainer>
                             case "Javascript":
-                                return <LogoContainer>
+                                return <LogoContainer key={el}>
                                     <Logo src={JavascriptLogo} alt="Javascript" />
                                     <Tooltip>Javascript</Tooltip>
                                 </LogoContainer>
                             case "HTML5":
-                                return <LogoContainer>
+                                return <LogoContainer key={el}>
                                     <Logo src={HTMLLogo} alt="HTML5" />
                                     <Tooltip>HTML5</Tooltip>
                                 </LogoContainer>
                             case "CSS3":
-                                return <LogoContainer>
+                                return <LogoContainer key={el}>
                                     <Logo src={CSSLogo} alt="CSS3" />
                                     <Tooltip>CSS3</Tooltip>
                                 </LogoContainer>
                             case "Nodejs":
-                                return <LogoContainer>
+                                return <LogoContainer key={el}>
                                     <Logo src={NodejsLogo} alt="Nodejs" />
                                     <Tooltip>Nodejs</Tooltip>
                                 </LogoContainer>
                             case "Mongodb":
-                                return <LogoContainer>
+                                return <LogoContainer key={el}>
                                     <Logo src={MongoLogo} alt="Mongodb" style={{ width: "100px" }} />
                                     <Tooltip>Mongodb</Tooltip>
                                 </LogoContainer>

@@ -5,13 +5,13 @@ const TooltipContainer = styled.div`
     display: none;
     position: absolute;
     width: max-content;
-    padding: 5px;
-    top: -25px;
+    padding: 10px;
+    top: -35px;
     left: 0;
     left: 50%;
     transform: translateX(-50%);
     height: 20px;
-    background-color: blue;
+    background-color: black;
     border-radius: 5px;
     color: white;
 `;
