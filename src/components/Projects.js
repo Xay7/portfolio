@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import Card from "./Card";
 import WeatherBackground from "../assets/weatherbg.png";
@@ -6,7 +6,7 @@ import JustChattingBackground from "../assets/justchattingbg.png";
 import TeamfightTacticsBackground from "../assets/tftbg.webp";
 
 const Container = styled.div`
-    width: 100vw;
+    width: 100%;
     height: auto;
     background-color: white;
     display:flex;
@@ -15,23 +15,12 @@ const Container = styled.div`
     align-items:center;
     justify-content: center;
     margin-bottom:55px;
-
-    @media (min-width: 768px) {
-        margin-bottom:0px;
-        margin-top:55px;
-    }
 `;
 
 const Projects = (props) => {
 
-    let ref = useRef(null);
-
-    useEffect(() => {
-        props.getRef(ref, "projects");
-    }, [props])
-
     return (
-        <Container ref={ref} >
+        <Container ref={props.forwardRef}>
             <Card
                 img={JustChattingBackground}
                 title="Just chatting"
@@ -58,4 +47,4 @@ const Projects = (props) => {
     )
 }
 
-export default Projects;
+export default React.forwardRef((props, ref) => <Projects forwardRef={ref} {...props} />);

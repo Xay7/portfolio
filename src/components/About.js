@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import GuyComputer from "../assets/reactbg.svg";
 
@@ -44,15 +44,8 @@ const ImageContainer = styled.div`
     justify-content: center;
 `;
 const About = (props) => {
-
-    let ref = useRef(null);
-
-    useEffect(() => {
-        props.getRef(ref, "about");
-    }, [props])
-
     return (
-        <Container ref={ref}>
+        <Container ref={props.forwardRef}>
             <MeContainer>
                 <Title>Hello, I'm Emil</Title>
                 <Description>I code stuff</Description>
@@ -64,4 +57,4 @@ const About = (props) => {
     )
 }
 
-export default About
+export default React.forwardRef((props, ref) => <About forwardRef={ref} {...props} />);
