@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import Navbar from "./components/Navbar";
 import Projects from '../src/components/Projects';
 import About from '../src/components/About';
@@ -7,30 +7,100 @@ import styled from 'styled-components';
 
 const Line = styled.hr`
    width:90%;
+   height:0; 
+   border:0; 
    border-top: 1px solid #EEE;
    margin: 0 auto;
 `;
 
-function App() {
+const Main = styled.main`
+   overflow-y: scroll;
+   overflow-x: hidden;
+   height: calc(100vh - 55px);
+   scroll-behavior: smooth;
+   width: 100vw;
 
-  const homeRef = useRef(null);
-  const projectsRef = useRef(null);
-  const contactRef = useRef(null);
+   @media (min-width: 768px) {
+      margin-top: 55px;
+   }
+`;
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [])
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: [true, false, false],
+    }
+    this.main = React.createRef();
 
-  return (
-    <React.Fragment>
-      <About ref={homeRef} />
-      <Line />
-      <Projects ref={projectsRef} />
-      <Line />
-      <Contact ref={contactRef} />
-      <Navbar refs={[homeRef, projectsRef, contactRef]} />
-    </React.Fragment>
-  );
+    this.about = React.createRef();
+    this.projects = React.createRef();
+    this.contact = React.createRef();
+  }
+
+  componentDidMount() {
+    this.main.current.addEventListener("scroll", () => {
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        this.handleScroll();
+      }, 33)
+    })
+  }
+
+  handleScroll = (e) => {
+    const offset = 150;
+    if (this.main.current.scrollTop >= this.about.current.offsetTop - offset && this.main.current.scrollTop - offset < this.about.current.offsetTop && !this.state.active[0]) {
+      return this.setState({ active: [true, false, false] });
+    } else if (this.main.current.scrollTop >= this.projects.current.offsetTop - offset && this.main.current.scrollTop - offset < this.projects.current.offsetTop && !this.state.active[1]) {
+      return this.setState({ active: [false, true, false] });
+    } else if (this.main.current.scrollTop >= this.contact.current.offsetTop - offset && !this.state.active[2]) {
+      return this.setState({ active: [false, false, true] });
+    }
+
+    // Slower but dynamic
+
+    // const refs = [this.about, this.projects, this.contact]
+    // let active = this.state.active;
+    // refs.map((el, index, arr) => {
+    //   console.log("BAD");
+    //   if (arr.length - 1 === index) {
+    //     if (this.main.current.scrollTop >= el.current.offsetTop - offset && !this.state.active[index]) {
+    //       active = active.map((el, ind) => {
+    //         if (ind === index) {
+    //           return el = true;
+    //         } else return el = false;
+    //       })
+    //       return this.setState({ active });
+    //     }
+    //   }
+    //   else if (this.main.current.scrollTop >= el.current.offsetTop - offset && this.main.current.scrollTop - offset < arr[index + 1].current.offsetTop && !this.state.active[index]) {
+    //     active = active.map((el, ind) => {
+    //       if (ind === index) {
+    //         return el = true;
+    //       } else return el = false;
+    //     })
+    //     return this.setState({ active });
+    //   } else return null;
+    //   return null;
+    // })
+
+  }
+
+  // TODO Find better way to debounce scroll event
+
+
+  render() {
+    return (
+      <Main ref={this.main} >
+        <About ref={this.about} />
+        <Line />
+        <Projects ref={this.projects} />
+        <Line />
+        <Contact ref={this.contact} />
+        <Navbar refs={[this.about, this.projects, this.contact]} main={this.main} active={this.state.active} />
+      </Main>
+    );
+  }
 }
 
 export default App;
