@@ -10,9 +10,8 @@ const Nav = styled.nav`
     width: 100vw;
     height: 55px;
     background: white;
-    box-shadow: 0 0px 5px 0px rgba(0,0,0,0.1);
-    border-top: 1px solid rgba(0,0,0,0.1);
-
+    box-shadow: 0 0px 3px 0px rgba(0,0,0,0.1);
+    z-index: 99;
     @media (min-width: 768px) {
         top: 0;
     }
@@ -27,31 +26,21 @@ const NavItemContainer = styled.div`
     justify-content:center;
     cursor:pointer;
     color:white;
+    box-shadow:0px 1px 3px 0px ${props => props.clicked ? "rgba(0, 0, 0, 0.1)" : "none"},
+    0px 1px 1px 0px ${props => props.clicked ? "rgba(0, 0, 0, 0.07)" : "none"},
+    0px 2px 2px -1px ${props => props.clicked ? "rgba(0, 0, 0, 0.06)" : "none"}; 
     p {
         margin: 0;
-        color:${props => props.clicked ? "green" : "#AAA"};
+        color:${props => props.clicked ? "#675EF3" : "#505050"};
         font-size:12px;
         flex-direction: column;
     }
 `;
 
-// Icons
-const HomeIcon = styled(Home)`
-    color: ${props => props.clicked ? "green" : "#AAA"};
-    height:20px;
-    width:20px;
-    transition: all 150ms ease-in-out;
-`;
-const ProjectsIcon = styled(Code)`
-    color: ${props => props.clicked ? "green" : "#AAA"};
-    height:20px;
-    width:20px;
-    transition: all 150ms ease-in-out;
-`
-const ContactIcon = styled(At)`
-    color: ${props => props.clicked ? "green" : "#AAA"};
-    height:20px;
-    width:20px;
+const Icon = styled.div`
+    color: ${props => props.clicked ? "#675EF3" : "#505050"};
+    height: 20px;
+    width: 20px;
     transition: all 150ms ease-in-out;
 `;
 
@@ -59,72 +48,35 @@ class Navbar extends React.Component {
 
     // Home -> Projects -> Contacts
     state = {
-        active: [true, false, false]
+        tags: ["about", "projects", "contact"]
     }
 
-    handleClick = (item, scrolling) => {
+    handleClick = (item) => {
 
         if (item === "about") {
-            window.scrollTo(0, this.props.refs[0].current.offsetTop)
+            return this.props.main.current.scrollTop = this.props.refs[0].current.offsetTop - 55
         }
         else if (item === "projects") {
-            window.scrollTo(0, this.props.refs[1].current.offsetTop - 55)
+            return this.props.main.current.scrollTop = this.props.refs[1].current.offsetTop
         }
         else if (item === "contact") {
-            window.scrollTo(0, this.props.refs[2].current.offsetTop - 55)
+            return this.props.main.current.scrollTop = this.props.refs[2].current.offsetTop
         }
-    }
-
-    handleScroll = () => {
-
-        let active = this.state.active;
-
-        this.props.refs.map((el, index, arr) => {
-            if (arr.length - 1 === index) {
-                if (window.scrollY >= el.current.offsetTop - 100 && !this.state.active[index]) {
-                    active = active.map((el, ind) => {
-                        if (ind === index) {
-                            return el = true;
-                        } else return el = false;
-                    })
-                    return this.setState({ active });
-                }
-            }
-            else if (window.scrollY >= el.current.offsetTop - 55 && window.scrollY < arr[index + 1].current.offsetTop - 55 && !this.state.active[index]) {
-                active = active.map((el, ind) => {
-                    if (ind === index) {
-                        return el = true;
-                    } else return el = false;
-                })
-                return this.setState({ active });
-            }
-        })
-
-    }
-
-    componentDidMount() {
-        document.addEventListener("scroll", this.handleScroll);
-    }
-
-    componentWillMount() {
-        document.removeEventListener("scroll", this.handleScroll);
     }
 
     render() {
         return (
             <Nav>
-                <NavItemContainer onClick={() => this.handleClick('about')} clicked={this.state.active[0]}>
-                    <HomeIcon clicked={this.state.active[0]} />
-                    <p>About</p>
-                </NavItemContainer>
-                <NavItemContainer onClick={() => this.handleClick('projects')} clicked={this.state.active[1]}>
-                    <ProjectsIcon clicked={this.state.active[1]} />
-                    <p>Projects</p>
-                </NavItemContainer>
-                <NavItemContainer onClick={() => this.handleClick('contact')} clicked={this.state.active[2]}>
-                    <ContactIcon clicked={this.state.active[2]} />
-                    <p>Contact</p>
-                </NavItemContainer>
+                {this.state.tags.map((el, index) => {
+                    return <NavItemContainer onClick={() => this.handleClick(el)} clicked={this.props.active[index]} key={index}>
+                        <Icon clicked={this.props.active[index]}>
+                            {el === "about" && <Home clicked={this.props.active[index]} />}
+                            {el === "projects" && <Code clicked={this.props.active[index]} />}
+                            {el === "contact" && <At clicked={this.props.active[index]} />}
+                        </Icon>
+                        <p>{el}</p>
+                    </NavItemContainer>
+                })}
             </Nav >
         )
     }
