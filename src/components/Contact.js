@@ -87,6 +87,7 @@ class Contact extends React.Component {
         // Score
         this.ctx.score = 0;
         this.ctx.gameOver = false;
+        this.ctx.savedUniverse = false;
 
         this.drawGround();
         this.drawBadGuy();
@@ -108,9 +109,13 @@ class Contact extends React.Component {
         if (!this.ctx.badOut) {
             this.updateBadGuy();
         }
+
         this.updatePlayer();
 
-
+        if (this.ctx.savedUniverse) {
+            this.drawSavedUniverse();
+            return;
+        }
         if (this.ctx.gameOver) {
             this.drawGameOver();
             return;
@@ -131,6 +136,18 @@ class Contact extends React.Component {
         this.ctx.font = this.ctx.mobile ? "16px poppins" : "24px poppins";
         this.ctx.fillStyle = "#76758E";
         this.ctx.fillText("Click to go back in time", this.ctx.canvas.width / 2, 80);
+    }
+
+    drawSavedUniverse = () => {
+        this.ctx.textAlign = "center";
+        this.ctx.font = this.ctx.mobile ? "18px poppins" : "36px poppins";
+        this.ctx.fillStyle = "#000";
+        this.ctx.fillText("Congratulations, you saved the universe!", this.ctx.canvas.width / 2, 40);
+
+        this.ctx.textAlign = "center";
+        this.ctx.font = this.ctx.mobile ? "16px poppins" : "24px poppins";
+        this.ctx.fillStyle = "#76758E";
+        this.ctx.fillText("Click to save it again", this.ctx.canvas.width / 2, 80);
     }
 
     drawGround = () => {
@@ -173,11 +190,14 @@ class Contact extends React.Component {
         if (this.ctx.badx < 0 - 60) {
             this.ctx.badOut = true;
             this.ctx.score++;
+            if (this.ctx.score === 10) {
+                this.ctx.savedUniverse = true;
+            }
             setTimeout(() => {
                 this.ctx.badx = window.innerWidth
                 if (this.ctx.mobile) {
                     this.ctx.badSpeed = (Math.random() * 3.5) + 1.5;
-                } else this.ctx.badSpeed = Math.floor((Math.random() * 10) + 5);
+                } else this.ctx.badSpeed = Math.floor((Math.random() * 15) + 7);
 
                 this.ctx.badOut = false;
             }, Math.floor((Math.random() * 500) + 1))
@@ -189,8 +209,6 @@ class Contact extends React.Component {
                 this.ctx.gameOver = true;
                 this.setState({ gameOver: true });
             }
-
-
         }
 
     }
