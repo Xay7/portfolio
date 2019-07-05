@@ -123,14 +123,14 @@ class Contact extends React.Component {
 
     drawGameOver = () => {
         this.ctx.textAlign = "center";
-        this.ctx.font = this.ctx.mobile ? "18px poppins" : "48px poppins";
+        this.ctx.font = this.ctx.mobile ? "18px poppins" : "36px poppins";
         this.ctx.fillStyle = "#000";
-        this.ctx.fillText("Oh no! Green block died :(", this.ctx.canvas.width / 2, 80);
+        this.ctx.fillText("Oh no! Green block died 😢", this.ctx.canvas.width / 2, 40);
 
         this.ctx.textAlign = "center";
         this.ctx.font = this.ctx.mobile ? "16px poppins" : "24px poppins";
         this.ctx.fillStyle = "#76758E";
-        this.ctx.fillText("Click to go back in time", this.ctx.canvas.width / 2, 120);
+        this.ctx.fillText("Click to go back in time", this.ctx.canvas.width / 2, 80);
     }
 
     drawGround = () => {
@@ -226,7 +226,7 @@ class Contact extends React.Component {
                     <ContactInfo logo="Phone">+48 883 241 335</ContactInfo>
                     <ContactInfo logo="Github">Xay7</ContactInfo>
                 </ContactInfoContainer>
-                <Canvas ref="canvas" width={window.innerWidth} height={280} onKeyDown={this.handleInput} onClick={this.handleClick} tabIndex="1"></Canvas>
+                <Canvas ref="canvas" width={window.innerWidth} height={280} onKeyDown={this.handleInput} onClick={this.handleClick} tabIndex="0"></Canvas>
             </Container>
         )
     }
