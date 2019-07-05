@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Tooltip from "./UI/Tooltip";
+import LogoTooltip from './UI/LogoTooltip';
 import ReactLogo from "../assets/react.svg";
 import JavascriptLogo from "../assets/javascript.svg";
 import CSSLogo from "../assets/css-3.svg";
@@ -9,11 +10,15 @@ import NodejsLogo from "../assets/nodejs-icon.svg";
 import MongoLogo from "../assets/mongodb.svg";
 import GooglePlayLogo from "../assets/google-play-icon.svg";
 import ReduxLogo from "../assets/redux.svg";
+import SassLogo from "../assets/sass.svg";
+
 
 const CardContainer = styled.div`
     width: 280px;
     height: auto;
-    box-shadow: 0px 0px 3px 0 rgba(0, 0, 0, 0.2);
+    box-shadow:  0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 2px 1px -1px rgba(0, 0, 0, 0.12);
     background-color: transparent;
     border-radius: 25px;
     overflow:hidden;
@@ -59,7 +64,7 @@ const Image = styled.img`
 
 const Title = styled.h3`
     margin:0;
-    color: black;
+    color: #444444;
     text-align: center;
     font-size: 24px;
     margin-top: 10px;
@@ -68,7 +73,7 @@ const Title = styled.h3`
 `;
 
 const Description = styled.p`
-    color: black;
+    color: #444444;
     font-size: 14px;
     margin: 0px 30px;
     margin-bottom: 10px;
@@ -107,14 +112,14 @@ const Card = (props) => {
 
     return (
         <CardContainer>
-            <Link href={props.link} target="_blank" rel="noopener noreferrer">
+            <Link aria-label={props.title} href={props.link} target="_blank" rel="noopener noreferrer">
                 <Image src={props.img} alt={props.title} />
             </Link>
             <InfoContainer>
                 {props.mobile ? <IsMobileContainer>
                     <Title>{props.title}</Title>
-                    <Link href={props.link} target="_blank" rel="noopener noreferrer">
-                        <Logo src={GooglePlayLogo} alt="React" />
+                    <Link href={props.link} aria-label="Google play" target="_blank" rel="noopener noreferrer">
+                        <Logo src={GooglePlayLogo} alt="Google play" />
                     </Link>
                 </IsMobileContainer>
                     : <Title>{props.title}</Title>}
@@ -126,45 +131,23 @@ const Card = (props) => {
                     {props.technologies.map(el => {
                         switch (el) {
                             case "React":
-                                return <LogoContainer key={el}>
-                                    <Logo src={ReactLogo} alt="React" />
-                                    <Tooltip>React</Tooltip>
-                                </LogoContainer>
+                                return <LogoTooltip src={ReactLogo} name={el} key={el} />
                             case "ReactNative":
-                                return <LogoContainer key={el}>
-                                    <Logo src={ReactLogo} alt="React Native" />
-                                    <Tooltip>React Native</Tooltip>
-                                </LogoContainer>
+                                return <LogoTooltip src={ReactLogo} name={el} key={el} />
                             case "Redux":
-                                return <LogoContainer key={el}>
-                                    <Logo src={ReduxLogo} alt="Redux" />
-                                    <Tooltip>Redux</Tooltip>
-                                </LogoContainer>
+                                return <LogoTooltip src={ReduxLogo} name={el} key={el} />
                             case "Javascript":
-                                return <LogoContainer key={el}>
-                                    <Logo src={JavascriptLogo} alt="Javascript" />
-                                    <Tooltip>Javascript</Tooltip>
-                                </LogoContainer>
+                                return <LogoTooltip src={JavascriptLogo} name={el} key={el} />
                             case "HTML5":
-                                return <LogoContainer key={el}>
-                                    <Logo src={HTMLLogo} alt="HTML5" />
-                                    <Tooltip>HTML5</Tooltip>
-                                </LogoContainer>
+                                return <LogoTooltip src={HTMLLogo} name={el} key={el} />
                             case "CSS3":
-                                return <LogoContainer key={el}>
-                                    <Logo src={CSSLogo} alt="CSS3" />
-                                    <Tooltip>CSS3</Tooltip>
-                                </LogoContainer>
+                                return <LogoTooltip src={CSSLogo} name={el} key={el} />
+                            case "Sass":
+                                return <LogoTooltip src={SassLogo} name={el} key={el} size="40px" />
                             case "Nodejs":
-                                return <LogoContainer key={el}>
-                                    <Logo src={NodejsLogo} alt="Nodejs" />
-                                    <Tooltip>Nodejs</Tooltip>
-                                </LogoContainer>
+                                return <LogoTooltip src={NodejsLogo} name={el} key={el} />
                             case "Mongodb":
-                                return <LogoContainer key={el}>
-                                    <Logo src={MongoLogo} alt="Mongodb" style={{ width: "100px" }} />
-                                    <Tooltip>Mongodb</Tooltip>
-                                </LogoContainer>
+                                return <LogoTooltip src={MongoLogo} name={el} size="100px" key={el} />
                             default: return null;
                         }
                     })}
