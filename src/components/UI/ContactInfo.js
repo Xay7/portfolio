@@ -54,8 +54,8 @@ const Contact = (props) => {
     return (
         <ContactContainer>
             <LogoContainer>
-                {props.logo === "Github" && <Link href="https://github.com/Xay7" target="_blank"><GithubSquare style={{ cursor: "pointer" }} /></Link>}
-                {props.logo === "Envelope" && <Link href="mailto:emilian.cw@gmail.com" target="_top"><Envelope /></Link>}
+                {props.logo === "Github" && <Link href="https://github.com/Xay7" target="_blank" aria-label="Github" rel="noopener noreferrer"><GithubSquare style={{ cursor: "pointer" }} /></Link>}
+                {props.logo === "Envelope" && <Link href="mailto:emilian.cw@gmail.com" target="_top" aria-label="Email me"><Envelope /></Link>}
                 {props.logo === "Phone" && <PhoneSquareAlt />}
             </LogoContainer>
             <Text>{props.children}</Text>
