@@ -1,60 +1,126 @@
 import React from "react";
 import styled from "styled-components";
-import GuyComputer from "../assets/reactbg.svg";
+import ReactBackground from "../assets/reactbg.svg";
+import LogoTooltip from "./UI/LogoTooltip";
+import ReactLogo from "../assets/react.svg";
+import JavascriptLogo from "../assets/javascript.svg";
+import CSSLogo from "../assets/css-3.svg";
+import HTMLLogo from "../assets/html-5.svg";
+import NodejsLogo from "../assets/nodejs-icon.svg";
+import MongoLogo from "../assets/mongodb.svg";
+import ReduxLogo from "../assets/redux.svg";
+import SassLogo from "../assets/sass.svg";
 
 const Container = styled.div`
-    height: calc(100vh - 55px);
-    width: 100%;
-    padding-top:55px;
-    background-color: white;
-    display:flex;
+  height: calc(100vh - 55px);
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: space-around;
+  align-items: center;
+  @media (min-width: 768px) {
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+  }
 `;
 
 const Title = styled.h1`
-    color: black;
-    margin: 0;
-    font-size:48px;
-    white-space: nowrap;
+  color: #444444;
+  margin: 0;
+  font-size: 36px;
+  white-space: nowrap;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1em;
+
+  @media (min-width: 768px) {
+    font-size: 64px;
+    text-align: start;
+  }
 `;
 
 const Description = styled.h3`
-    color: black;
-    margin: 0;
-    font-size:36px;
+  color: #6c63ff;
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+  font-weight: 700;
+  margin-top: 5px;
+  margin-bottom: 10px;
+
+  @media (min-width: 768px) {
+    font-size: 36px;
+    text-align: start;
+  }
 `;
 
 const MeContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left:10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 0;
+  height: 100%;
+
+  @media (min-width: 768px) {
+    margin-left: 10%;
+  }
 `;
 
 const ReactImage = styled.img`
-    width:80%;
-    height:80%;
-    object-fit: contain;
+  display: block;
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
 `;
 
 const ImageContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items:center;
-    justify-content: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
-const About = (props) => {
-    return (
-        <Container ref={props.forwardRef}>
-            <MeContainer>
-                <Title>Hello, I'm Emil</Title>
-                <Description>I code stuff</Description>
-            </MeContainer>
-            <ImageContainer >
-                <ReactImage src={GuyComputer} />
-            </ImageContainer>
-        </Container>
-    )
-}
 
-export default React.forwardRef((props, ref) => <About forwardRef={ref} {...props} />);
+const LogosContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+  }
+`;
+
+const About = props => {
+  return (
+    <Container ref={props.forwardRef}>
+      <MeContainer>
+        <Title>Hello, I'm Emil</Title>
+        <Description>I'm a web developer</Description>
+        <LogosContainer>
+          <LogoTooltip src={HTMLLogo} name="HTML5" />
+          <LogoTooltip src={CSSLogo} name="CSS5" />
+          <LogoTooltip src={SassLogo} name="Sass" size="40px" />
+          <LogoTooltip src={JavascriptLogo} name="Javascript" />
+          <LogoTooltip src={ReactLogo} name="React" />
+          <LogoTooltip src={ReduxLogo} name="Redux" />
+          <LogoTooltip src={NodejsLogo} name="Nodejs" />
+          <LogoTooltip src={MongoLogo} name="Mongodb" size="100px" />
+        </LogosContainer>
+      </MeContainer>
+      <ImageContainer>
+        <ReactImage src={ReactBackground} alt="Girl sitting on react logo" />
+      </ImageContainer>
+    </Container>
+  );
+};
+
+export default React.forwardRef((props, ref) => (
+  <About forwardRef={ref} {...props} />
+));

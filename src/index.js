@@ -3,18 +3,15 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import WebFont from 'webfontloader';
+import WebFont from "webfontloader";
 
 WebFont.load({
   google: {
-    families: ['Poppins:400,700', 'sans-serif']
+    families: ["Open Sans:400,500,600,700", "sans-serif"]
   }
 });
 
-
-const app = (
-  <App />
-);
+const app = <App />;
 
 ReactDOM.render(app, document.getElementById("root"));
 
