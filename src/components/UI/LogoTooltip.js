@@ -9,7 +9,7 @@ const Logo = styled.img`
   &:hover + div {
     visibility: visible;
     opacity: 1;
-    top: -45px;
+    top: -50px;
   }
 `;
 

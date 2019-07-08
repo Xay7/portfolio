@@ -9,9 +9,10 @@ const Nav = styled.nav`
   bottom: 0;
   width: 100vw;
   height: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom: 1px solid #ddd;
   background-color: white;
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.06), 0px 2px 1px -1px rgba(0, 0, 0, 0.06);
   z-index: 99;
   @media (min-width: 768px) {
     top: 0;
@@ -42,7 +43,7 @@ const NavItemContainer = styled.div`
 `;
 
 const Icon = styled.div`
-  color: ${props => (props.scrolled ? "#675EF3" : "#505050")};
+  color: ${props => (props.scrolled ? "#0984e3" : "#444444")};
   height: 20px;
   width: 20px;
   transition: all 150ms ease-in-out;
@@ -50,7 +51,7 @@ const Icon = styled.div`
 
 const NavText = styled.p`
   margin: 0;
-  color: ${props => (props.scrolled ? "#675EF3" : "#505050")};
+  color: ${props => (props.scrolled ? "#0984e3" : "#444444")};
   font-size: 15px;
   flex-direction: column;
 `;

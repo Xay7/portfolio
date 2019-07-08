@@ -7,12 +7,11 @@ const TooltipContainer = styled.div`
   position: absolute;
   width: max-content;
   padding: 10px;
-  top: -35px;
+  top: -30px;
   left: 50%;
   transform: translateX(-50%);
   height: 20px;
   background-color: #444444;
-  border-radius: 10px;
   color: white;
   transition: all 100ms ease-in-out;
 
@@ -21,8 +20,8 @@ const TooltipContainer = styled.div`
     position: absolute;
     top: 100%;
     left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
+    margin-left: -7px;
+    border-width: 7px;
     border-style: solid;
     border-color: #444444 transparent transparent transparent;
   }

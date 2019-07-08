@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import ReactBackground from "../assets/reactbg.svg";
 import LogoTooltip from "./UI/LogoTooltip";
 import ReactLogo from "../assets/react.svg";
 import JavascriptLogo from "../assets/javascript.svg";
@@ -14,7 +13,7 @@ import SassLogo from "../assets/sass.svg";
 const Container = styled.div`
   height: calc(100vh - 55px);
   width: 100%;
-  background-color: white;
+  background-color: #fbfbfb;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -43,7 +42,7 @@ const Title = styled.h1`
 `;
 
 const Description = styled.h3`
-  color: #6c63ff;
+  color: #0984e3;
   margin: 0;
   font-size: 24px;
   text-align: center;
@@ -65,23 +64,7 @@ const MeContainer = styled.div`
   height: 100%;
 
   @media (min-width: 768px) {
-    margin-left: 10%;
   }
-`;
-
-const ReactImage = styled.img`
-  display: block;
-  width: 80%;
-  height: 80%;
-  object-fit: contain;
-`;
-
-const ImageContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const LogosContainer = styled.div`
@@ -114,9 +97,6 @@ const About = props => {
           <LogoTooltip src={MongoLogo} name="Mongodb" size="100px" />
         </LogosContainer>
       </MeContainer>
-      <ImageContainer>
-        <ReactImage src={ReactBackground} alt="Girl sitting on react logo" />
-      </ImageContainer>
     </Container>
   );
 };

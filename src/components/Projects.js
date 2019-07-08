@@ -8,13 +8,12 @@ import TeamfightTacticsBackground from "../assets/tftbg.webp";
 const Container = styled.div`
   width: 100%;
   height: auto;
-  background-color: white;
+  background-color: #fbfbfb;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  margin-bottom: 55px;
 
   @media (min-width: 1100px) {
     height: 100vh;

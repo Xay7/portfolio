@@ -14,10 +14,8 @@ import SassLogo from "../assets/sass.svg";
 const CardContainer = styled.div`
   width: 280px;
   height: auto;
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
-  background-color: transparent;
-  border-radius: 10px;
+  border: 1px solid #ddd;
+  background-color: white;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -53,7 +51,6 @@ const Image = styled.img`
   object-fit: cover;
   align-self: center;
   cursor: pointer;
-  border-radius: 10px 10px 0 0;
   transition: all 150ms ease-in-out;
 
   :hover {
@@ -141,10 +138,10 @@ const Card = props => {
             </Link>
           </IsMobileContainer>
         ) : (
-          <TitleContainer>
-            <Title>{props.title}</Title>
-          </TitleContainer>
-        )}
+            <TitleContainer>
+              <Title>{props.title}</Title>
+            </TitleContainer>
+          )}
         <Description>{props.description}</Description>
         {props.list && (
           <List>

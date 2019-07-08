@@ -14,14 +14,12 @@ const Line = styled.hr`
 `;
 
 const Main = styled.main`
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: calc(100vh - 55px);
-  scroll-behavior: smooth;
+  overflow: scroll;
+  height: 100vh;
   width: 100vw;
 
   @media (min-width: 768px) {
-    margin-top: 55px;
+    margin-top: 64px;
   }
 `;
 
@@ -39,6 +37,7 @@ class App extends React.Component {
 
   // Find a better way to debounce scroll event
   componentDidMount() {
+    this.main.current.scrollTop = 2555;
     this.main.current.addEventListener("scroll", () => {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
@@ -61,8 +60,7 @@ class App extends React.Component {
       }
       case "Contact": {
         this.setState({ active: [false, false, true] });
-        return (this.main.current.scrollTop =
-          this.contact.current.offsetTop - 35);
+        return (this.main.current.scrollTop = this.contact.current.offsetTop);
       }
       default:
         return null;
