@@ -11,7 +11,6 @@ const Nav = styled.nav`
   height: 64px;
   left: 50%;
   transform: translateX(-50%);
-  border-bottom: 1px solid #ddd;
   background-color: white;
   z-index: 99;
   @media (min-width: 768px) {
@@ -28,15 +27,22 @@ const NavItemContainer = styled.div`
   justify-content: center;
   cursor: pointer;
   color: white;
+  border-top: 2px solid ${props => (props.scrolled ? "#0984e3" : "#ddd")};
+  transition: 150ms all;
+
+  @media (min-width: 728px) {
+    border-top: none;
+    border-bottom: 2px solid ${props => (props.scrolled ? "#0984e3" : "#ddd")};
+  }
 
   &:hover {
     @media (min-width: 1224px) {
       p {
-        color: #675ef3;
+        color: #0984e3;
       }
 
       div {
-        color: #675ef3;
+        color: #0984e3;
       }
     }
   }

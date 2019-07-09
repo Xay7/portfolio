@@ -11,7 +11,7 @@ import ReduxLogo from "../assets/redux.svg";
 import SassLogo from "../assets/sass.svg";
 
 const Container = styled.div`
-  height: calc(100vh - 55px);
+  height: calc(100vh);
   width: 100%;
   background-color: #fbfbfb;
   display: flex;
@@ -60,10 +60,11 @@ const MeContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 0;
   height: 100%;
+  margin-top: 0px;
 
   @media (min-width: 768px) {
+    margin-top: 0px;
   }
 `;
 

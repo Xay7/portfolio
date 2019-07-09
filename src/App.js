@@ -9,18 +9,14 @@ const Line = styled.hr`
   width: 90%;
   height: 0;
   border: 0;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #ddd;
   margin: 0 auto;
 `;
 
 const Main = styled.main`
-  overflow: scroll;
   height: 100vh;
   width: 100vw;
-
-  @media (min-width: 768px) {
-    margin-top: 64px;
-  }
+  max-width: 100%;
 `;
 
 class App extends React.Component {
@@ -29,7 +25,6 @@ class App extends React.Component {
     this.state = {
       active: [true, false, false]
     };
-    this.main = React.createRef();
     this.about = React.createRef();
     this.projects = React.createRef();
     this.contact = React.createRef();
@@ -37,8 +32,7 @@ class App extends React.Component {
 
   // Find a better way to debounce scroll event
   componentDidMount() {
-    this.main.current.scrollTop = 2555;
-    this.main.current.addEventListener("scroll", () => {
+    window.addEventListener("scroll", () => {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         this.handleScroll();
@@ -50,17 +44,15 @@ class App extends React.Component {
     switch (item) {
       case "About": {
         this.setState({ active: [true, false, false] });
-        return (this.main.current.scrollTop =
-          this.about.current.offsetTop - 55);
+        return window.scrollTo(0, this.about.current.offsetTop)
       }
       case "Projects": {
         this.setState({ active: [false, true, false] });
-        return (this.main.current.scrollTop =
-          this.projects.current.offsetTop - 35);
+        return window.scrollTo(0, this.projects.current.offsetTop)
       }
       case "Contact": {
         this.setState({ active: [false, false, true] });
-        return (this.main.current.scrollTop = this.contact.current.offsetTop);
+        return window.scrollTo(0, this.contact.current.offsetTop)
       }
       default:
         return null;
@@ -69,20 +61,21 @@ class App extends React.Component {
 
   handleScroll = e => {
     const offset = 150;
+    const bodyScrollPosition = document.documentElement.scrollTop;
     if (
-      this.main.current.scrollTop >= this.about.current.offsetTop - offset &&
-      this.main.current.scrollTop - offset < this.about.current.offsetTop &&
+      bodyScrollPosition >= this.about.current.offsetTop - offset &&
+      bodyScrollPosition - offset < this.about.current.offsetTop &&
       !this.state.active[0]
     ) {
       return this.setState({ active: [true, false, false] });
     } else if (
-      this.main.current.scrollTop >= this.projects.current.offsetTop - offset &&
-      this.main.current.scrollTop - offset < this.projects.current.offsetTop &&
+      bodyScrollPosition >= this.projects.current.offsetTop - offset &&
+      bodyScrollPosition - offset < this.projects.current.offsetTop &&
       !this.state.active[1]
     ) {
       return this.setState({ active: [false, true, false] });
     } else if (
-      this.main.current.scrollTop >= this.contact.current.offsetTop - offset &&
+      bodyScrollPosition >= this.contact.current.offsetTop - offset &&
       !this.state.active[2]
     ) {
       return this.setState({ active: [false, false, true] });
@@ -117,7 +110,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Main ref={this.main}>
+      <Main>
         <About ref={this.about} />
         <Line />
         <Projects ref={this.projects} />
