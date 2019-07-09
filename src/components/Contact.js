@@ -1,267 +1,219 @@
 import React from "react";
 import styled from "styled-components";
 import ContactInfo from "./UI/ContactInfo";
+import axios from "axios";
+import Game from "./Game";
+import Loader from './UI/Loader';
 
 const Container = styled.div`
-  height: calc(100vh - 55px);
+  height: auto;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
+  background-color: #fbfbfb;
+
+  @media (min-width: 1400px) {
+
+  }
 `;
 
 const Header = styled.h1`
   font-size: 36px;
   color: #444444;
   margin: 10px 0;
-  width: 100%;
   text-align: center;
+  align-self: center;
 
-  @media (min-width: 768px) {
-    text-align: left;
+  @media (min-width: 1200px) {
     font-size: 48px;
   }
 `;
 
-const ContactInfoContainer = styled.div`
+const ContactOptions = styled.div`
   width: 100%;
   height: 100%;
   background-color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  background-color: #fbfbfb;
+  margin: 10px 0;
 
-  @media (min-width: 768px) {
-    margin-left: 20%;
+  @media (min-width: 1200px) {
+    flex-direction: row;
   }
 `;
 
-const Canvas = styled.canvas`
+const Contacts = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 0;
+
+  @media (min-width: 1200px) {
+    margin-top: 100px;
+  }
+`;
+
+const Form = styled.form`
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: 1200px) {
+     align-items: flex-start;
+     margin: 0;
+     width: auto;
+  }
+  
+`;
+
+const FormContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  @media (min-width: 1200px) {
+     align-items: flex-start;
+     margin-top: 100px;
+  }
+`;
+
+const TextInput = styled.input`
+  box-sizing: border-box;
+  width: 90%;
+  height: 50px;
+  border: 1px solid ${props => props.error ? "red" : "#ccc"};
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  
+  ::placeholder {
+    color: ${props => props.error ? "red" : "#aaa"}
+  }
+
+  @media (min-width: 1200px) {
+    width: 600px;
+  }
+`;
+
+const Textarea = styled.textarea`
+  resize: none;
+  width: calc(90% - 20px);
+  height: 200px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+
+  ::placeholder {
+    color: #aaa;
+  }
+
+  @media (min-width: 1200px) {
+    width: 578px;
+  }
+`;
+
+const Send = styled.input`
+  font-size: 18px;
+  height: 45px;
+  width: calc(40% + 22px);
+  background-color: ${props => props.success ? "green" : "#0984e3"};
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  align-self: center;
+  transition: 150ms all;
   outline: none;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 
+  0 3px 1px -2px rgba(0,0,0,0.2), 
+  0 1px 5px 0 rgba(0,0,0,0.12);
+
+  :hover {
+    background-color: ${props => props.success ? "green" : "#0673c7"};
+  }
 `;
 
 class Contact extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      jumping: false,
-      gameOver: false,
-      paused: true
-    };
-    this.animation = null;
-  }
 
-  componentDidMount = () => {
-    this.ctx = this.refs.canvas.getContext("2d");
-    this.draw();
+  state = {
+    email: "",
+    emailError: false,
+    title: "",
+    message: "",
+    messageError: "",
+    loading: false,
+    formSuccess: false
   };
 
-  draw = () => {
-    this.setState({ gameOver: false });
-    this.ctx.mobile = false;
-    if (window.innerWidth < 1024) {
-      this.ctx.mobile = true;
-    }
-    // Player
-    this.ctx.x = this.ctx.mobile ? 50 : 150;
-    this.ctx.y = this.ctx.mobile ? 170 : 140;
-    this.ctx.dy = 0;
-    this.ctx.size = this.ctx.mobile ? 30 : 60;
-    this.ctx.onGround = false;
-    this.ctx.jumpPower = -13;
-    // World
-    this.ctx.gravity = 0.6;
-    this.ctx.drag = 0.999;
-    this.ctx.groundDrag = 1;
-    this.ctx.ground = 200;
-    // Bad guy
-    this.ctx.badx = window.innerWidth;
-    this.ctx.bady = this.ctx.mobile ? 170 : 140;
-    this.ctx.badsize = this.ctx.mobile ? 30 : 60;
-    this.ctx.badSpeed = this.ctx.mobile ? 2 : 5;
-    this.ctx.badOut = false;
-    // Score
-    this.ctx.score = 0;
-    this.ctx.gameOver = false;
-    this.ctx.savedUniverse = false;
-
-    this.drawGround();
-    this.drawBadGuy();
-    this.drawPlayer();
-  };
-
-  mainLoop = () => {
-    let canvas = this.refs.canvas;
-    let ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    canvas.width = window.innerWidth;
-
-    this.drawGround();
-    this.drawBadGuy();
-    this.drawPlayer();
-
-    if (!this.ctx.badOut) {
-      this.updateBadGuy();
-    }
-
-    this.updatePlayer();
-
-    if (this.ctx.savedUniverse) {
-      this.drawSavedUniverse();
-      return;
-    }
-    if (this.ctx.gameOver) {
-      this.drawGameOver();
-      return;
-    }
-
-    requestAnimationFrame(() => this.mainLoop());
-  };
-
-  drawGameOver = () => {
-    this.ctx.textAlign = "center";
-    this.ctx.font = this.ctx.mobile
-      ? "bold 18px open sans"
-      : "bold 36px open sans";
-    this.ctx.fillStyle = "red";
-    this.ctx.fillText(
-      "Oh no! Green block died 😢",
-      this.ctx.canvas.width / 2,
-      40
-    );
-    this.ctx.textAlign = "center";
-    this.ctx.font = this.ctx.mobile ? "16px open sans" : "24px open sans";
-    this.ctx.fillStyle = "#76758E";
-    this.ctx.fillText(
-      "Click to go back in time",
-      this.ctx.canvas.width / 2,
-      80
-    );
-  };
-
-  drawSavedUniverse = () => {
-    this.ctx.textAlign = "center";
-    this.ctx.font = this.ctx.mobile
-      ? "bold 24px open sans"
-      : "bold 48px open sans";
-    this.ctx.fillStyle = "green";
-    this.ctx.fillText("Congratulations!", this.ctx.canvas.width / 2, 45);
-    this.ctx.font = this.ctx.mobile ? "18px open sans" : "36px open sans";
-    this.ctx.fillStyle = "#000";
-    this.ctx.fillText(
-      "You saved the universe 🤗",
-      this.ctx.canvas.width / 2,
-      this.ctx.mobile ? 75 : 95
-    );
-  };
-
-  drawGround = () => {
-    const ctx = this.refs.canvas.getContext("2d");
-    ctx.fillRect(0, this.ctx.ground, window.innerWidth, 100);
-  };
-
-  drawPlayer() {
-    const ctx = this.refs.canvas.getContext("2d");
-    ctx.fillStyle = "green";
-    ctx.fillRect(this.ctx.x, this.ctx.y, ctx.size, ctx.size);
-  }
-
-  drawBadGuy() {
-    this.ctx.fillStyle = "#FF0000";
-    this.ctx.fillRect(
-      this.ctx.badx,
-      this.ctx.bady,
-      this.ctx.badsize,
-      this.ctx.badsize
-    );
-  }
-
-  updatePlayer() {
-    if (this.state.jumping && this.ctx.onGround) {
-      this.ctx.dy = this.ctx.jumpPower;
-    }
-    this.ctx.dy += this.ctx.gravity;
-    this.ctx.dy *= this.ctx.drag;
-    this.ctx.y += this.ctx.dy;
-
-    if (this.ctx.y + this.ctx.size >= this.ctx.ground) {
-      this.ctx.y = this.ctx.ground - this.ctx.size;
-      this.ctx.dy = 0;
-      this.ctx.onGround = true;
-      this.setState({ jumping: false });
-    } else {
-      this.ctx.onGround = false;
-    }
-  }
-
-  updateBadGuy() {
-    if (this.ctx.badx < 0 - 60) {
-      this.ctx.badOut = true;
-      this.ctx.score++;
-      if (this.ctx.score === 10) {
-        this.ctx.savedUniverse = true;
-      }
-      setTimeout(() => {
-        this.ctx.badx = window.innerWidth;
-        if (this.ctx.mobile) {
-          this.ctx.badSpeed = Math.random() * 4 + 2.5;
-        } else this.ctx.badSpeed = Math.floor(Math.random() * 15 + 7);
-
-        this.ctx.badOut = false;
-      }, Math.floor(Math.random() * 500 + 1));
-    } else {
-      this.ctx.badx -= this.ctx.badSpeed;
-
-      if (
-        this.ctx.badx < this.ctx.x + this.ctx.size &&
-        this.ctx.badx > this.ctx.x - this.ctx.size &&
-        this.ctx.bady < this.ctx.y + this.ctx.size &&
-        this.ctx.bady > this.ctx.y - this.ctx.size
-      ) {
-        this.ctx.gameOver = true;
-        this.setState({ gameOver: true });
-      }
-    }
-  }
-
-  handleInput = e => {
+  // Form carry for serverless contact forms yay!
+  handleForm = async (e) => {
     e.preventDefault();
-    if (e.keyCode === 38 || e.keyCode === 32) {
-      this.setState({ jumping: true, paused: false });
-    }
-  };
+    // Check if email is valid
+    await this.validEmail(this.state.email);
 
-  handleClick = e => {
-    if (this.state.paused === true) {
-      this.mainLoop();
+    if (this.state.emailError) {
+      return;
     }
-    if (this.state.gameOver === true) {
-      this.setState({ gameOver: false });
-      this.draw();
-      this.mainLoop();
+    else if (this.state.message.length < 1) {
+      return;
     }
-    this.setState({ jumping: true, paused: false });
-  };
+    // Post a message to my email
+    this.setState({ loading: true })
+    await axios.post("https://formcarry.com/s/WjN5v3b01iK", { email: this.state.email, title: this.state.title, message: this.state.message }, {
+      headers: {
+        "Accept": "application/json"
+      }
+    })
+    this.setState({ loading: false, formSuccess: true })
+  }
+
+  handleInput = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+      emailError: false
+    })
+  }
+
+  validEmail = (email) => {
+    // eslint-disable-next-line no-useless-escape
+    const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return this.setState({ emailError: !pattern.test(email) });
+  }
 
   render() {
     return (
       <Container ref={this.props.forwardRef}>
-        <ContactInfoContainer>
-          <Header>Find me here</Header>
-          <ContactInfo logo="Envelope">emilian.cw@gmail.com</ContactInfo>
-          <ContactInfo logo="Phone">+48 883 241 335</ContactInfo>
-          <ContactInfo logo="Github">Xay7</ContactInfo>
-        </ContactInfoContainer>
-        <Canvas
-          ref="canvas"
-          width={window.innerWidth}
-          height={280}
-          onKeyDown={this.handleInput}
-          onClick={this.handleClick}
-          tabIndex="0"
-        />
+        <ContactOptions>
+          <Contacts>
+            <Header>Find me here</Header>
+            <ContactInfo name="Github">https://github.com/Xay7</ContactInfo>
+            <ContactInfo name="Linkedin">https://www.linkedin.com/in/emiliancw/</ContactInfo>
+            <ContactInfo name="Email">emilian.cw@gmail.com</ContactInfo>
+            <ContactInfo name="Phone">+48 883 241 335</ContactInfo>
+          </Contacts>
+          <FormContainer>
+            <Form onSubmit={this.handleForm} >
+              <Header>Message me</Header>
+              <TextInput type="text" name="email" placeholder={this.state.emailError ? "Invalid email" : "Email"} onChange={this.handleInput} error={this.state.emailError} />
+              <TextInput type="text" name="title" placeholder="Title" autoComplete="off" onChange={this.handleInput} />
+              <Textarea name="message" placeholder="Your message" onChange={this.handleInput} />
+              <div style={{ position: "relative", width: "100%", height: "auto", display: "flex", justifyContent: "center", marginTop: 20 }}>
+                <Send type="submit" value={this.state.loading ? " " : this.state.formSuccess ? "✔": "Send"} success={this.state.formSuccess} disabled={this.state.formSuccess} />
+                {this.state.loading && <Loader />}
+              </div>
+            </Form>
+          </FormContainer>
+        </ContactOptions>
+        <Game />
       </Container>
     );
   }
