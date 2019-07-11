@@ -8,12 +8,12 @@ const TooltipContainer = styled.div`
   width: max-content;
   padding: 10px;
   top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
+  transform: none;
   height: 20px;
   background-color: #444444;
   color: white;
-  transition: all 50ms ease-in-out;
+  transition: all 150ms ease-in-out;
+  pointer-events: none;
 
   &::after {
     content: " ";

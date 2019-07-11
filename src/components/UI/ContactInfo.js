@@ -20,7 +20,7 @@ const ContactContainer = styled.div`
 `;
 
 const LogoContainer = styled.div`
-  width: 25px;
+  width: 30px;
   color: #444444;
   transition: all 150ms ease-in-out;
 
@@ -29,7 +29,7 @@ const LogoContainer = styled.div`
     transform: scale(1.1);
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 728px) {
     width: 50px;
   }
 `;
