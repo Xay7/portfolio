@@ -63,7 +63,8 @@ const NavText = styled.p`
 `;
 
 const Navbar = props => {
-  const [sections] = useState(["About", "Projects", "Contact"]);
+
+  const [sections] = useState(["about", "projects", "contact"]);
 
   return (
     <Nav>
@@ -71,15 +72,15 @@ const Navbar = props => {
         return (
           <NavItemContainer
             onClick={() => props.clicked(el)}
-            scrolled={props.active[index]}
+            scrolled={props.active[el]}
             key={index}
           >
-            <Icon scrolled={props.active[index]}>
-              {el === "About" && <Home />}
-              {el === "Projects" && <Code />}
-              {el === "Contact" && <At />}
+            <Icon scrolled={props.active[el]}>
+              {el === "about" && <Home />}
+              {el === "projects" && <Code />}
+              {el === "contact" && <At />}
             </Icon>
-            <NavText scrolled={props.active[index]}>{el}</NavText>
+            <NavText scrolled={props.active[el]}>{el}</NavText>
           </NavItemContainer>
         );
       })}

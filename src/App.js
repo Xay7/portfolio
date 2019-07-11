@@ -23,7 +23,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: [true, false, false]
+      about: true,
+      projects: false,
+      contact: false,
     };
     this.about = React.createRef();
     this.projects = React.createRef();
@@ -40,72 +42,36 @@ class App extends React.Component {
     });
   }
 
+  // Finds clicked element and set it to false
+  removeActiveStatus = () => {
+    return Object.keys(this.state).some((el, index) => {
+      if (this.state[el]) {
+        this.setState({ [el]: false })
+        return true;
+      } else return false;
+    })
+  }
+
   handleClick = item => {
-    switch (item) {
-      case "About": {
-        this.setState({ active: [true, false, false] });
-        return window.scrollTo(0, this.about.current.offsetTop)
-      }
-      case "Projects": {
-        this.setState({ active: [false, true, false] });
-        return window.scrollTo(0, this.projects.current.offsetTop)
-      }
-      case "Contact": {
-        this.setState({ active: [false, false, true] });
-        return window.scrollTo(0, this.contact.current.offsetTop)
-      }
-      default:
-        return null;
-    }
+    this.removeActiveStatus();
+    this.setState({ [item]: true });
+    return window.scrollTo(0, this[item].current.offsetTop);
   };
 
   handleScroll = e => {
+
+    // Offset value make CSS appear faster than intended
     const offset = 150;
     const bodyScrollPosition = document.documentElement.scrollTop;
-    if (
-      bodyScrollPosition >= this.about.current.offsetTop - offset &&
-      bodyScrollPosition - offset < this.about.current.offsetTop &&
-      !this.state.active[0]
-    ) {
-      return this.setState({ active: [true, false, false] });
-    } else if (
-      bodyScrollPosition >= this.projects.current.offsetTop - offset &&
-      bodyScrollPosition - offset < this.projects.current.offsetTop &&
-      !this.state.active[1]
-    ) {
-      return this.setState({ active: [false, true, false] });
-    } else if (
-      bodyScrollPosition >= this.contact.current.offsetTop - offset &&
-      !this.state.active[2]
-    ) {
-      return this.setState({ active: [false, false, true] });
-    }
 
-    // Slower but dynamic
-
-    // const refs = [this.about, this.projects, this.contact]
-    // let active = this.state.active;
-    // refs.map((el, index, arr) => {
-    //   if (arr.length - 1 === index) {
-    //     if (this.main.current.scrollTop >= el.current.offsetTop - offset && !this.state.active[index]) {
-    //       active = active.map((el, ind) => {
-    //         if (ind === index) {
-    //           return el = true;
-    //         } else return el = false;
-    //       })
-    //       return this.setState({ active });
-    //     }
-    //   }
-    //   else if (this.main.current.scrollTop >= el.current.offsetTop - offset && this.main.current.scrollTop - offset < arr[index + 1].current.offsetTop && !this.state.active[index]) {
-    //     active = active.map((el, ind) => {
-    //       if (ind === index) {
-    //         return el = true;
-    //       } else return el = false;
-    //     })
-    //     return this.setState({ active });
-    //   } else return null;
-    //   return null;
-    // })
+    Object.keys(this.state).some((el, index) => {
+      if (bodyScrollPosition >= this[el].current.offsetTop - offset &&
+        bodyScrollPosition - offset < this[el].current.offsetTop && !this.state[el]) {
+        this.removeActiveStatus();
+        this.setState({ [el]: true });
+        return true;
+      } else return false;
+    })
   };
 
   render() {
@@ -117,8 +83,7 @@ class App extends React.Component {
         <Line />
         <Contact ref={this.contact} />
         <Navbar
-          refs={[this.about, this.projects, this.contact]}
-          active={this.state.active}
+          active={this.state}
           clicked={this.handleClick}
         />
       </Main>
