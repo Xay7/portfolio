@@ -109,11 +109,11 @@ const Textarea = styled.textarea`
   width: calc(90% - 20px);
   height: 200px;
   padding: 5px 10px;
-  border: 1px solid #ccc;
+  border: 1px solid ${props => props.error ? "red" : "#ccc"};
   font-size: 16px;
 
   ::placeholder {
-    color: #aaa;
+    color: ${props => props.error ? "red" : "#aaa"}
   }
 
   @media (min-width: 1200px) {
@@ -128,7 +128,7 @@ const Send = styled.input`
   background-color: ${props => props.success ? "green" : "#0984e3"};
   border: none;
   color: white;
-  cursor: pointer;
+  cursor: ${props => props.success ? "not-allowed" : "pointer"};
   border-radius: 5px;
   align-self: center;
   transition: 150ms all;
@@ -149,24 +149,28 @@ class Contact extends React.Component {
     emailError: false,
     title: "",
     message: "",
-    messageError: "",
+    messageError: false,
     loading: false,
     formSuccess: false
   };
 
-  // Form carry for serverless contact forms yay!
+  // Form carry for serverless form handling
   handleForm = async (e) => {
     e.preventDefault();
-    // Check if email is valid
+
+    // Error handling
     await this.validEmail(this.state.email);
 
     if (this.state.emailError) {
       return;
     }
+
     else if (this.state.message.length < 1) {
+      this.setState({ messageError: true })
       return;
     }
-    // Post a message to my email
+
+    // Post message to my endpoint
     this.setState({ loading: true })
     await axios.post("https://formcarry.com/s/WjN5v3b01iK", { email: this.state.email, title: this.state.title, message: this.state.message }, {
       headers: {
@@ -179,7 +183,8 @@ class Contact extends React.Component {
   handleInput = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
-      emailError: false
+      emailError: false,
+      messageError: false
     })
   }
 
@@ -205,9 +210,9 @@ class Contact extends React.Component {
               <Header>Message me</Header>
               <TextInput type="text" name="email" placeholder={this.state.emailError ? "Invalid email" : "Email"} onChange={this.handleInput} error={this.state.emailError} />
               <TextInput type="text" name="title" placeholder="Title" autoComplete="off" onChange={this.handleInput} />
-              <Textarea name="message" placeholder="Your message" onChange={this.handleInput} />
+              <Textarea name="message" placeholder={this.state.messageError ? "Message can't be empty" : "Message"} onChange={this.handleInput} error={this.state.messageError} />
               <div style={{ position: "relative", width: "100%", height: "auto", display: "flex", justifyContent: "center", marginTop: 20 }}>
-                <Send type="submit" value={this.state.loading ? " " : this.state.formSuccess ? "✔": "Send"} success={this.state.formSuccess} disabled={this.state.formSuccess} />
+                <Send type="submit" value={this.state.loading ? " " : this.state.formSuccess ? "✔" : "Send"} success={this.state.formSuccess} disabled={this.state.formSuccess} />
                 {this.state.loading && <Loader />}
               </div>
             </Form>

@@ -87,21 +87,21 @@ export class Game extends Component {
     drawGameOver = () => {
         this.ctx.textAlign = "center";
         this.ctx.font = this.ctx.mobile
-            ? "bold 18px open sans"
+            ? "bold 24px open sans"
             : "bold 36px open sans";
         this.ctx.fillStyle = "red";
         this.ctx.fillText(
             "Oh no! Green block died 😢",
             this.ctx.canvas.width / 2,
-            40
+            90
         );
         this.ctx.textAlign = "center";
-        this.ctx.font = this.ctx.mobile ? "16px open sans" : "24px open sans";
+        this.ctx.font = this.ctx.mobile ? "18px open sans" : "28px open sans";
         this.ctx.fillStyle = "#76758E";
         this.ctx.fillText(
             "Click to go back in time",
             this.ctx.canvas.width / 2,
-            80
+            this.ctx.mobile ? 120 : 130
         );
     };
 
@@ -109,15 +109,15 @@ export class Game extends Component {
         this.ctx.textAlign = "center";
         this.ctx.font = this.ctx.mobile
             ? "bold 24px open sans"
-            : "bold 48px open sans";
+            : "bold 36px open sans";
         this.ctx.fillStyle = "green";
-        this.ctx.fillText("Congratulations!", this.ctx.canvas.width / 2, 45);
-        this.ctx.font = this.ctx.mobile ? "18px open sans" : "36px open sans";
+        this.ctx.fillText("Congratulations!", this.ctx.canvas.width / 2, 90);
+        this.ctx.font = this.ctx.mobile ? "18px open sans" : "28px open sans";
         this.ctx.fillStyle = "#000";
         this.ctx.fillText(
             "You saved the universe 🤗",
             this.ctx.canvas.width / 2,
-            this.ctx.mobile ? 75 : 95
+            this.ctx.mobile ? 120 : 130
         );
     };
 

@@ -13,7 +13,7 @@ const TooltipContainer = styled.div`
   height: 20px;
   background-color: #444444;
   color: white;
-  transition: all 100ms ease-in-out;
+  transition: all 50ms ease-in-out;
 
   &::after {
     content: " ";
