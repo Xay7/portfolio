@@ -4,7 +4,7 @@ import { Envelope, PhoneSquareAlt } from "styled-icons/fa-solid";
 import { GithubSquare, Linkedin } from "styled-icons/fa-brands";
 
 const ContactContainer = styled.div`
-  width: 280px;
+  width: 300px;
   height: auto;
   background-color: #fbfbfb;
   display: flex;
@@ -61,7 +61,7 @@ const Header = styled.h1`
 
 const Text = styled.p`
   margin: 0;
-  font-size: 12px;
+  font-size: 13px;
   color: #656380;
 
   @media (min-width: 480px) {

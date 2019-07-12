@@ -38,7 +38,7 @@ class App extends React.Component {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         this.handleScroll();
-      }, 66);
+      }, 100);
     });
   }
 
