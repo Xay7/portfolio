@@ -59,7 +59,7 @@ const Projects = props => {
             "View item combinations and their stats",
             "Find champion synergies and their abilites"
           ]}
-          technologies={["React Native", "Javascript", "HTML5", "CSS3"]}
+          technologies={["Android", "React Native", "Javascript"]}
           link="https://play.google.com/store/apps/details?id=com.teamfighttactics"
           mobile={true}
         />

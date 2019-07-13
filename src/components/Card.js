@@ -9,10 +9,11 @@ import NodejsLogo from "../assets/nodejs-icon.svg";
 import MongoLogo from "../assets/mongodb.svg";
 import GooglePlayLogo from "../assets/google-play-icon.svg";
 import ReduxLogo from "../assets/redux.svg";
+import AndroidLogo from "../assets/android-icon.svg";
 import SassLogo from "../assets/sass.svg";
 
 const CardContainer = styled.div`
-  width: 280px;
+  width: 90%;
   height: auto;
   border: 1px solid #ddd;
   background-color: white;
@@ -22,8 +23,12 @@ const CardContainer = styled.div`
   margin: 20px;
   overflow: visible;
 
+  @media (min-width: 420px) {
+    width: 80%;
+  }
+
   @media (min-width: 768px) {
-    width: 320px;
+    width: 330px;
   }
 `;
 
@@ -172,14 +177,9 @@ const Card = props => {
               case "Nodejs":
                 return <LogoTooltip src={NodejsLogo} name={el} key={el} />;
               case "Mongodb":
-                return (
-                  <LogoTooltip
-                    src={MongoLogo}
-                    name={el}
-                    size="100px"
-                    key={el}
-                  />
-                );
+                return <LogoTooltip src={MongoLogo} name={el} size="100px" key={el} />;
+              case "Android":
+                return <LogoTooltip src={AndroidLogo} name={el} key={el} />;
               default:
                 return null;
             }

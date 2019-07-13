@@ -9,9 +9,11 @@ import NodejsLogo from "../assets/nodejs-icon.svg";
 import MongoLogo from "../assets/mongodb.svg";
 import ReduxLogo from "../assets/redux.svg";
 import SassLogo from "../assets/sass.svg";
+import PhotoshopLogo from '../assets/photoshop.svg';
+import IllustratorLogo from '../assets/illustrator.svg';
 
 const Container = styled.div`
-  height: calc(100vh);
+  height: 100vh;
   width: 100%;
   background-color: #fbfbfb;
   display: flex;
@@ -60,7 +62,9 @@ const MeContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   height: 100%;
+  width: 100%;
   margin-top: 0px;
 
   @media (min-width: 768px) {
@@ -96,6 +100,8 @@ const About = props => {
           <LogoTooltip src={ReduxLogo} name="Redux" />
           <LogoTooltip src={NodejsLogo} name="Nodejs" />
           <LogoTooltip src={MongoLogo} name="Mongodb" size="100px" />
+          <LogoTooltip src={PhotoshopLogo} name="Photoshop" />
+          <LogoTooltip src={IllustratorLogo} name="Illustrator" />
         </LogosContainer>
       </MeContainer>
     </Container>
