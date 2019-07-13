@@ -53,12 +53,13 @@ const Icon = styled.div`
   height: 20px;
   width: 20px;
   transition: all 150ms ease-in-out;
+  margin-bottom: 2px;
 `;
 
 const NavText = styled.p`
   margin: 0;
   color: ${props => (props.scrolled ? "#0984e3" : "#444444")};
-  font-size: 15px;
+  font-size: 16px;
   flex-direction: column;
 `;
 
