@@ -62,7 +62,7 @@ class App extends React.Component {
 
     // Offset value make CSS appear faster than intended
     const offset = 150;
-    const bodyScrollPosition = document.documentElement.scrollTop;
+    const bodyScrollPosition = document.documentElement.scrollTop || document.body.scrollTop
 
     Object.keys(this.state).some((el, index) => {
       if (bodyScrollPosition >= this[el].current.offsetTop - offset &&
@@ -71,7 +71,7 @@ class App extends React.Component {
         this.setState({ [el]: true });
         return true;
       } else return false;
-    })
+    });
   };
 
   render() {
