@@ -7,7 +7,6 @@ import CSSLogo from "../assets/css-3.svg";
 import HTMLLogo from "../assets/html-5.svg";
 import NodejsLogo from "../assets/nodejs-icon.svg";
 import MongoLogo from "../assets/mongodb.svg";
-import GooglePlayLogo from "../assets/google-play-icon.svg";
 import ReduxLogo from "../assets/redux.svg";
 import AndroidLogo from "../assets/android-icon.svg";
 import SassLogo from "../assets/sass.svg";
@@ -15,13 +14,14 @@ import SassLogo from "../assets/sass.svg";
 const CardContainer = styled.div`
   width: 90%;
   height: auto;
-  border: 1px solid #ddd;
   background-color: white;
+  border: 1px solid #ddd;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   margin: 20px;
   overflow: visible;
+  border-radius: 5px;
 
   @media (min-width: 420px) {
     width: 80%;
@@ -33,12 +33,6 @@ const CardContainer = styled.div`
 `;
 
 const InfoContainer = styled.div``;
-
-const IsMobileContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`;
 
 const Technologies = styled.div`
   width: auto;
@@ -57,6 +51,7 @@ const Image = styled.img`
   align-self: center;
   cursor: pointer;
   transition: all 150ms ease-in-out;
+  border-radius: 5px 5px 0 0;
 
   :hover {
     filter: brightness(70%);
@@ -87,11 +82,6 @@ const Description = styled.p`
   font-weight: 700;
 `;
 
-const Logo = styled.img`
-  width: 25px;
-  margin: 10px;
-`;
-
 const ListItem = styled.li`
   font-size: 14px;
   padding: 1px 0;
@@ -115,38 +105,42 @@ const List = styled.ul`
 `;
 
 const Link = styled.a`
+  position: relative;
+  width: 100px;
   cursor: pointer;
+  text-align: center;
+  background-color: #0984e3;
+  color: white;
+  padding: 7px;
+  box-shadow: 0 5px #0564ad;
+  transition: 150ms ease-in-out;
+  transition-property: background-color, top;
+  text-decoration: none;
+  border-radius: 5px;
+  &:hover {
+    background-color: #0676cc;
+  }
+  &:active {
+    box-shadow: none;
+    top: 5px;
+  }
 `;
 
 const Card = props => {
   return (
     <CardContainer>
-      <Link
+      <a
         aria-label={props.title}
         href={props.link}
         target="_blank"
         rel="noopener noreferrer"
       >
         <Image src={props.img} alt={props.title} />
-      </Link>
+      </a>
       <InfoContainer>
-        {props.mobile ? (
-          <IsMobileContainer>
-            <Title>{props.title}</Title>
-            <Link
-              href={props.link}
-              aria-label="Google play"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Logo src={GooglePlayLogo} alt="Google play" />
-            </Link>
-          </IsMobileContainer>
-        ) : (
-            <TitleContainer>
-              <Title>{props.title}</Title>
-            </TitleContainer>
-          )}
+        <TitleContainer>
+          <Title>{props.title}</Title>
+        </TitleContainer>
         <Description>{props.description}</Description>
         {props.list && (
           <List>
@@ -177,7 +171,14 @@ const Card = props => {
               case "Nodejs":
                 return <LogoTooltip src={NodejsLogo} name={el} key={el} />;
               case "Mongodb":
-                return <LogoTooltip src={MongoLogo} name={el} size="100px" key={el} />;
+                return (
+                  <LogoTooltip
+                    src={MongoLogo}
+                    name={el}
+                    size="100px"
+                    key={el}
+                  />
+                );
               case "Android":
                 return <LogoTooltip src={AndroidLogo} name={el} key={el} />;
               default:
@@ -185,6 +186,33 @@ const Card = props => {
             }
           })}
         </Technologies>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: "20px",
+            marginTop: "10px",
+            justifyContent: "space-evenly"
+          }}
+        >
+          <Link
+            aria-label="View live site"
+            href={props.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Live
+          </Link>
+          <Link
+            aria-label="View github repo"
+            href={props.github}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Github
+          </Link>
+        </div>
       </InfoContainer>
     </CardContainer>
   );
