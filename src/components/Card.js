@@ -15,10 +15,11 @@ const CardContainer = styled.div`
   width: 90%;
   height: auto;
   background-color: white;
-  border: 1px solid #ddd;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  border: 1px solid #ddd;
+  box-shadow: 0px 6px #ddd;
   margin: 20px;
   overflow: visible;
   border-radius: 5px;

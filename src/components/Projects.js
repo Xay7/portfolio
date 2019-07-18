@@ -48,6 +48,7 @@ const Projects = props => {
             "Mongodb"
           ]}
           link="https://justchatting.netlify.com/"
+          github="https://github.com/Xay7/just-chatting"
         />
         <Card
           img={TeamfightTacticsBackground}
@@ -59,9 +60,15 @@ const Projects = props => {
             "View item combinations and their stats",
             "Find champion synergies and their abilites"
           ]}
-          technologies={["Android", "React Native", "Javascript"]}
+          technologies={[
+            "Android",
+            "React Native",
+            "Javascript",
+            "HTML5",
+            "CSS3"
+          ]}
           link="https://play.google.com/store/apps/details?id=com.teamfighttactics"
-          mobile={true}
+          github="https://github.com/Xay7/Teamfight-Tactics-Handbook"
         />
         <Card
           img={WeatherBackground}
@@ -74,6 +81,7 @@ const Projects = props => {
           ]}
           technologies={["React", "Javascript", "HTML5", "CSS3"]}
           link="https://weather-forecast-fe821.firebaseapp.com/"
+          github="https://github.com/Xay7/Weather-Forecast"
         />
       </Container>
     </React.Fragment>

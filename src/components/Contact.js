@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ContactInfo from "./UI/ContactInfo";
 import axios from "axios";
 import Game from "./Game";
-import Loader from './UI/Loader';
+import Loader from "./UI/Loader";
 
 const Container = styled.div`
   height: auto;
@@ -15,7 +15,6 @@ const Container = styled.div`
   background-color: #fbfbfb;
 
   @media (min-width: 1400px) {
-
   }
 `;
 
@@ -68,11 +67,10 @@ const Form = styled.form`
   justify-content: center;
 
   @media (min-width: 1200px) {
-     align-items: flex-start;
-     margin: 0;
-     width: auto;
+    align-items: flex-start;
+    margin: 0;
+    width: auto;
   }
-  
 `;
 
 const FormContainer = styled.div`
@@ -80,10 +78,10 @@ const FormContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  
+
   @media (min-width: 1200px) {
-     align-items: flex-start;
-     margin-top: 100px;
+    align-items: flex-start;
+    margin-top: 100px;
   }
 `;
 
@@ -91,12 +89,12 @@ const TextInput = styled.input`
   box-sizing: border-box;
   width: 90%;
   height: 50px;
-  border: 1px solid ${props => props.error ? "red" : "#ccc"};
+  border: 1px solid ${props => (props.error ? "red" : "#ccc")};
   padding: 5px 10px;
   margin-bottom: 20px;
-  
+
   ::placeholder {
-    color: ${props => props.error ? "red" : "#aaa"}
+    color: ${props => (props.error ? "red" : "#aaa")};
   }
 
   @media (min-width: 1200px) {
@@ -109,11 +107,11 @@ const Textarea = styled.textarea`
   width: calc(90% - 20px);
   height: 200px;
   padding: 5px 10px;
-  border: 1px solid ${props => props.error ? "red" : "#ccc"};
+  border: 1px solid ${props => (props.error ? "red" : "#ccc")};
   font-size: 16px;
 
   ::placeholder {
-    color: ${props => props.error ? "red" : "#aaa"}
+    color: ${props => (props.error ? "red" : "#aaa")};
   }
 
   @media (min-width: 1200px) {
@@ -122,28 +120,32 @@ const Textarea = styled.textarea`
 `;
 
 const Send = styled.input`
+  position: relative;
   font-size: 18px;
   height: 45px;
   width: calc(40% + 22px);
-  background-color: ${props => props.success ? "green" : "#0984e3"};
+  background-color: ${props => (props.success ? "green" : "#0984e3")};
   border: none;
   color: white;
-  cursor: ${props => props.success ? "not-allowed" : "pointer"};
+  cursor: ${props => (props.success ? "not-allowed" : "pointer")};
   border-radius: 5px;
   align-self: center;
   transition: 150ms all;
   outline: none;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 
-  0 3px 1px -2px rgba(0,0,0,0.2), 
-  0 1px 5px 0 rgba(0,0,0,0.12);
+  box-shadow: 0 5px ${props => (props.success ? "#025e02" : "#0564ad")};
+  transition: 150ms ease-in-out;
+  transition-property: background-color, top;
+  &:active {
+    box-shadow: none;
+    top: 5px;
+  }
 
   :hover {
-    background-color: ${props => props.success ? "green" : "#0673c7"};
+    background-color: ${props => (props.success ? "green" : "#0676cc")};
   }
 `;
 
 class Contact extends React.Component {
-
   state = {
     email: "",
     emailError: false,
@@ -155,7 +157,7 @@ class Contact extends React.Component {
   };
 
   // Form carry for serverless form handling
-  handleForm = async (e) => {
+  handleForm = async e => {
     e.preventDefault();
 
     // Error handling
@@ -163,36 +165,42 @@ class Contact extends React.Component {
 
     if (this.state.emailError) {
       return;
-    }
-
-    else if (this.state.message.length < 1) {
-      this.setState({ messageError: true })
+    } else if (this.state.message.length < 1) {
+      this.setState({ messageError: true });
       return;
     }
 
     // Post message to my endpoint
-    this.setState({ loading: true })
-    await axios.post("https://formcarry.com/s/WjN5v3b01iK", { email: this.state.email, title: this.state.title, message: this.state.message }, {
-      headers: {
-        "Accept": "application/json"
+    this.setState({ loading: true });
+    await axios.post(
+      "https://formcarry.com/s/WjN5v3b01iK",
+      {
+        email: this.state.email,
+        title: this.state.title,
+        message: this.state.message
+      },
+      {
+        headers: {
+          Accept: "application/json"
+        }
       }
-    })
-    this.setState({ loading: false, formSuccess: true })
-  }
+    );
+    this.setState({ loading: false, formSuccess: true });
+  };
 
-  handleInput = (e) => {
+  handleInput = e => {
     this.setState({
       [e.target.name]: e.target.value,
       emailError: false,
       messageError: false
-    })
-  }
+    });
+  };
 
-  validEmail = (email) => {
+  validEmail = email => {
     // eslint-disable-next-line no-useless-escape
     const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return this.setState({ emailError: !pattern.test(email) });
-  }
+  };
 
   render() {
     return (
@@ -201,18 +209,59 @@ class Contact extends React.Component {
           <Contacts>
             <Header>Find me here</Header>
             <ContactInfo name="Github">https://github.com/Xay7</ContactInfo>
-            <ContactInfo name="Linkedin">https://www.linkedin.com/in/emiliancw/</ContactInfo>
+            <ContactInfo name="Linkedin">
+              https://www.linkedin.com/in/emiliancw/
+            </ContactInfo>
             <ContactInfo name="Email">emilian.cw@gmail.com</ContactInfo>
             <ContactInfo name="Phone">+48 883 241 335</ContactInfo>
           </Contacts>
           <FormContainer>
-            <Form onSubmit={this.handleForm} >
+            <Form onSubmit={this.handleForm}>
               <Header>Message me</Header>
-              <TextInput type="text" name="email" placeholder={this.state.emailError ? "Invalid email" : "Email"} onChange={this.handleInput} error={this.state.emailError} />
-              <TextInput type="text" name="title" placeholder="Title" autoComplete="off" onChange={this.handleInput} />
-              <Textarea name="message" placeholder={this.state.messageError ? "Message can't be empty" : "Message"} onChange={this.handleInput} error={this.state.messageError} />
-              <div style={{ position: "relative", width: "100%", height: "auto", display: "flex", justifyContent: "center", marginTop: 20 }}>
-                <Send type="submit" value={this.state.loading ? " " : this.state.formSuccess ? "✔" : "Send"} success={this.state.formSuccess} disabled={this.state.formSuccess} />
+              <TextInput
+                type="text"
+                name="email"
+                placeholder={this.state.emailError ? "Invalid email" : "Email"}
+                onChange={this.handleInput}
+                error={this.state.emailError}
+              />
+              <TextInput
+                type="text"
+                name="title"
+                placeholder="Title"
+                autoComplete="off"
+                onChange={this.handleInput}
+              />
+              <Textarea
+                name="message"
+                placeholder={
+                  this.state.messageError ? "Message can't be empty" : "Message"
+                }
+                onChange={this.handleInput}
+                error={this.state.messageError}
+              />
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  height: "auto",
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: 20
+                }}
+              >
+                <Send
+                  type="submit"
+                  value={
+                    this.state.loading
+                      ? " "
+                      : this.state.formSuccess
+                      ? "✔"
+                      : "Send"
+                  }
+                  success={this.state.formSuccess}
+                  disabled={this.state.formSuccess}
+                />
                 {this.state.loading && <Loader />}
               </div>
             </Form>

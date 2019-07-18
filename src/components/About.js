@@ -9,8 +9,8 @@ import NodejsLogo from "../assets/nodejs-icon.svg";
 import MongoLogo from "../assets/mongodb.svg";
 import ReduxLogo from "../assets/redux.svg";
 import SassLogo from "../assets/sass.svg";
-import PhotoshopLogo from '../assets/photoshop.svg';
-import IllustratorLogo from '../assets/illustrator.svg';
+import PhotoshopLogo from "../assets/photoshop.svg";
+import IllustratorLogo from "../assets/illustrator.svg";
 
 const Container = styled.div`
   height: 100vh;
