@@ -65,7 +65,7 @@ const Title = styled.h3`
   text-align: center;
   font-size: 26px;
   font-weight: bold;
-  margin: 10px 0;
+  margin: 7px 0;
   font-weight: bold;
 `;
 
@@ -73,14 +73,14 @@ const TitleContainer = styled.div``;
 
 const Description = styled.p`
   font-weight: bold;
-  color: #444444;
+  color: #4f4f4f;
   font-size: 16px;
   margin: 0px 30px;
   margin-bottom: 10px;
   text-align: justify;
   text-justify: distribute;
   text-align-last: left;
-  font-weight: 700;
+  font-weight: 600;
 `;
 
 const ListItem = styled.li`
@@ -90,7 +90,7 @@ const ListItem = styled.li`
   ::before {
     content: "•";
     font-size: 16px;
-    color: #6c63ff;
+    color: #0984e3;
     font-weight: bold;
     display: inline-block;
     width: 1.2em;

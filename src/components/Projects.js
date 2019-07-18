@@ -32,10 +32,9 @@ const Projects = props => {
             "Offline and online members",
             "Edit channel name, description",
             "Delete or leave room",
-            "Edit avatar and password",
+            "Change avatar and password",
             "Messages timestamps",
-            "Image and link support",
-            "...and more!"
+            "Image and link support and more!"
           ]}
           technologies={[
             "React",
